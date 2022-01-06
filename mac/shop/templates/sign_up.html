@@ -1,0 +1,36 @@
+{% extends 'base2.html' %}
+
+{% block title %} Sign in  {% endblock %}
+
+{% block body %}
+     
+
+<style>
+  
+</style>
+
+
+<div class="container col-4 mt-5 text-center">
+    <div class="row">
+        <div class="alert alert-secondary text-center mb-5" role="alert">
+            <b>Create your Account !!</b>
+        </div>
+        <form action="/" method='POST'>
+            {% csrf_token %}
+            {% if messages %}
+                {%for message in messages %}
+                    <div class="alert alert-danger mt-0 " role=alert>
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {{form.as_p}}
+            
+                <input class="btn btn-sm btn-success" type="submit" value="submit">
+        </form>
+    </div>
+</div>
+                         
+
+
+{% endblock %}
