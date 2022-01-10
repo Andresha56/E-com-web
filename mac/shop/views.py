@@ -13,8 +13,22 @@ from django.contrib import messages
 def index(request):
     product=Product.objects.all()
     category=Category.get_all_category()
+    print(request.GET)
+    product_category=(request.GET.get(' product category'))
+    print(product_category)
+    if product_category:
+        product= Product.get_product_by_product_category_id(product_category)
+        
+        
+    else:
+        product=Product.objects.all()
     param={'product':product,'category':category}
     return render(request,'index.html',param)
+
+
+
+
+
 
 #  ---------sign_up_page---------
 def sign_up(request):

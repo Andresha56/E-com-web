@@ -13,3 +13,4 @@ class Category(models.Model):
     @staticmethod 
     def get_all_category():
         return Category.objects.all()
+

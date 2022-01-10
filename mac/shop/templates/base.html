@@ -51,8 +51,9 @@
               </a>
 
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="? product category=">All Products</a></li>
                 {% for categories in category %}
-                <li><a class="dropdown-item" href="#">{{categories.category}}</a></li>
+                <li><a class="dropdown-item" href="? product category={{categories.id}}">{{categories.category}}</a></li>
                 {% endfor %}
                 
               </ul>
