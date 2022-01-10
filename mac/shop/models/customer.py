@@ -1,6 +1,7 @@
 
 from django.db import models
 
+
 class Customer(models.Model):
     f_name=models.CharField(max_length=20)
     l_name=models.CharField(max_length=20)
@@ -15,4 +16,6 @@ class Customer(models.Model):
         else:
             return False
 
-        
+    @staticmethod
+    def get_customer_by_username(f_name):
+        return Customer.objects.get(f_name=f_name)

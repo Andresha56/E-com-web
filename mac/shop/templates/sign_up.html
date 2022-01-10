@@ -3,11 +3,6 @@
 {% block title %} Sign in  {% endblock %}
 
 {% block body %}
-     
-
-<style>
-  
-</style>
 
 
 <div class="container col-4 mt-5 text-center">
@@ -22,6 +17,7 @@
                     <div class="alert alert-danger mt-0 " role=alert>
                         {{message}}
                     </div>
+                    
                 {% endfor %}
             {% endif %}
             {{form.as_p}}
