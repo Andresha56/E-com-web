@@ -16,10 +16,9 @@ def index(request):
     param={'product':product,'category':category}
     return render(request,'index.html',param)
 
-
+#  ---------sign_up_page---------
 def sign_up(request):
     if request.method == 'POST':
-        print("post mehod run ho raha hain bhai")
         customer=Customer_form(request.POST)
         if customer.is_valid():
             f_name=(customer.cleaned_data['f_name'])
@@ -45,12 +44,11 @@ def sign_up(request):
 
     else:
         customer=Customer_form()
-        print('Get method is running ')
     data={'form':customer, }
     return render(request,'sign_up.html',data)
 
 
-
+# ------------Log_in_page------------
 def log_in(request):
     if request.method=='POST':
         log_in=Login_form(request.POST)
@@ -62,7 +60,6 @@ def log_in(request):
             except Exception as a:
                 messages.add_message(request,messages.ERROR,'User name or password is invalid ')
                 return redirect('log_in_page')
-            print(customer)
             if  customer:
                 print(customer.password)
                 if password==customer.password:
