@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.shortcuts import HttpResponseRedirect
-from django.contrib.auth import authenticate,login,logout
+from django.views import View
 
 from .models import Product
 from .models import Category
@@ -13,13 +13,9 @@ from django.contrib import messages
 def index(request):
     product=Product.objects.all()
     category=Category.get_all_category()
-    print(request.GET)
     product_category=(request.GET.get(' product category'))
-    print(product_category)
     if product_category:
-        product= Product.get_product_by_product_category_id(product_category)
-        
-        
+        product= Product.get_product_by_product_category_id(product_category)  
     else:
         product=Product.objects.all()
     param={'product':product,'category':category}
@@ -63,6 +59,7 @@ def sign_up(request):
 
 
 # ------------Log_in_page------------
+
 def log_in(request):
     if request.method=='POST':
         log_in=Login_form(request.POST)
