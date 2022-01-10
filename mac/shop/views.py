@@ -1,10 +1,12 @@
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
+from django.shortcuts import HttpResponseRedirect
+from django.contrib.auth import authenticate,login,logout
 
 from .models import Product
 from .models import Category
 from .models import Customer
-from.forms import Customer_form, Login_form
+from.forms import Customer_form, Login_form 
 from django.contrib import messages
 
 
@@ -14,10 +16,9 @@ def index(request):
     param={'product':product,'category':category}
     return render(request,'index.html',param)
 
-
+#  ---------sign_up_page---------
 def sign_up(request):
     if request.method == 'POST':
-        print("post mehod running")
         customer=Customer_form(request.POST)
         if customer.is_valid():
             f_name=(customer.cleaned_data['f_name'])
@@ -31,9 +32,6 @@ def sign_up(request):
 
             elif len(password and re_password) <8:
                 messages.add_message(request,messages.ERROR,'Password must be 7 digit long or more !!')
-            
-
-
             else:
                 register=Customer(f_name=f_name,
                                     l_name=l_name,
@@ -46,13 +44,30 @@ def sign_up(request):
 
     else:
         customer=Customer_form()
-        print('Get method is running ')
     data={'form':customer, }
     return render(request,'sign_up.html',data)
 
 
+# ------------Log_in_page------------
 def log_in(request):
-    form=Login_form()
-    print(form)
-    param={'form':form}
+    if request.method=='POST':
+        log_in=Login_form(request.POST)
+        if log_in.is_valid():
+            user_name=log_in.cleaned_data['f_name']
+            password=log_in.cleaned_data['password']
+            try:
+                customer=Customer.get_customer_by_username(f_name=user_name)
+            except Exception as a:
+                messages.add_message(request,messages.ERROR,'User name or password is invalid ')
+                return redirect('log_in_page')
+            if  customer:
+                print(customer.password)
+                if password==customer.password:
+                    return redirect('homepage')
+                else:
+                    messages.add_message(request,messages.ERROR,'User name or password is invalid ')                    
+    else: 
+        log_in=Login_form()
+
+    param={'log_in_form':log_in}
     return render(request,'login.html',param)

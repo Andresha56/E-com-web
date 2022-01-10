@@ -5,6 +5,40 @@
 
 {% block body %}
 
-    {{form.as_p}}
+<style>
+.css{
+    display: flex;
+    margin: 10px 0;
+}
 
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+</style>
+<div class="row justify-content-center">
+    <div class="alert alert-primary col-4 text-center" role="alert">
+    <h4 class="alert-heading">
+        Log in to your Account
+    </h4>
+  </div>
+    <div id="container">
+            <form action="" method="post">
+                {% csrf_token %}
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-danger mt-0 " role=alert>
+                            {{message}}
+                        </div>
+                        
+                        {% endfor %}
+                    {% endif %}
+
+                   {{log_in_form.as_p}}
+                   <input class='btn btn-sm btn-success' type="submit" value="Log in ">
+            </form>
+    </div>
 {% endblock %}

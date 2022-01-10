@@ -2,6 +2,8 @@ from django import forms
 from django.forms import fields
 from .models import  Customer
 
+# ----------code for sign_up page-------------
+
 class Customer_form(forms.ModelForm):
     class Meta:
         model=Customer
@@ -22,8 +24,24 @@ class Customer_form(forms.ModelForm):
                 
 }
 
+#      ----------code for log_in page----------------
+
 
 class Login_form(forms.ModelForm):
         class Meta:
                 model=Customer
-                fields=['f_name','email','password','re_password']
+                fields=['f_name','password']
+
+                labels={'f_name':'User name',
+                'email':'Email',
+                're_password':'Reenter Password' }
+
+
+                widgets={
+                        'f_name':forms.TextInput(attrs={'class':'css','id':'f_name'}),
+                        'email':forms.EmailInput(attrs={'class':'css','id':'email'}),
+                         'password':forms.PasswordInput(attrs={'class':'css',
+                        'id':'password','placeholder':'*****'}),
+                      
+                
+                }
