@@ -27,41 +27,43 @@ def index(request):
 
 
 #  ---------sign_up_page---------
-def sign_up(request):
-    if request.method == 'POST':
-        customer=Customer_form(request.POST)
-        if customer.is_valid():
-            f_name=(customer.cleaned_data['f_name'])
-            l_name=(customer.cleaned_data['l_name'])
-            email=(customer.cleaned_data['email'])
-            password=(customer.cleaned_data['password'])
-            re_password=(customer.cleaned_data['re_password'])
 
-            if password != re_password:
-                messages.add_message(request,messages.ERROR,'Password does not match !!')
+class Sign_up(View):
+    def post(self,request):
+            customer=Customer_form(request.POST)
+            if customer.is_valid():
+                f_name=(customer.cleaned_data['f_name'])
+                l_name=(customer.cleaned_data['l_name'])
+                email=(customer.cleaned_data['email'])
+                password=(customer.cleaned_data['password'])
+                re_password=(customer.cleaned_data['re_password'])
 
-            elif len(password and re_password) <8:
-                messages.add_message(request,messages.ERROR,'Password must be 7 digit long or more !!')
-            else:
-                register=Customer(f_name=f_name,
-                                    l_name=l_name,
-                                    email=email,
-                                    password=password,
-                                    re_password=re_password
-                                    )
-                register.save()
-                return redirect('homepage')
+                if password != re_password:
+                    messages.add_message(request,messages.ERROR,'Password does not match !!')
 
-    else:
+                elif len(password and re_password) <8:
+                    messages.add_message(request,messages.ERROR,'Password must be 7 digit long or more !!')
+                else:
+                    register=Customer(f_name=f_name,
+                                        l_name=l_name,
+                                        email=email,
+                                        password=password,
+                                        re_password=re_password
+                                        )
+                    register.save()
+                    return redirect('homepage')
+            data={'form':customer, }
+            return render(request,'sign_up.html',data)    
+    def get(self,request):
         customer=Customer_form()
-    data={'form':customer, }
-    return render(request,'sign_up.html',data)
+        data={'form':customer, }
+        return render(request,'sign_up.html',data)
 
 
 # ------------Log_in_page------------
 
-def log_in(request):
-    if request.method=='POST':
+class Log_in(View):
+    def post(self,request):
         log_in=Login_form(request.POST)
         if log_in.is_valid():
             user_name=log_in.cleaned_data['f_name']
@@ -77,8 +79,21 @@ def log_in(request):
                     return redirect('homepage')
                 else:
                     messages.add_message(request,messages.ERROR,'User name or password is invalid ')                    
-    else: 
+        param={'log_in_form':log_in}
+        return render(request,'login.html',param)
+        
+    def get(self,request): 
         log_in=Login_form()
+        param={'log_in_form':log_in}
+        return render(request,'login.html',param)
 
-    param={'log_in_form':log_in}
-    return render(request,'login.html',param)
+
+
+# ------delete customer-------
+def delete_customer(request,id):
+    if request.method=='POST':
+        customer=Customer.objects.get(pk=id)
+        print(customer)
+        customer.delete()
+        param={'customer':customer}
+        return redirect('sign_up_page',param)

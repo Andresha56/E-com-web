@@ -23,4 +23,5 @@ urlpatterns = [
     path('',include('shop.urls')),
     path('index/',include('shop.urls')),
     path('login/',include('shop.urls')),
+    path('delete/',include('shop.urls')),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

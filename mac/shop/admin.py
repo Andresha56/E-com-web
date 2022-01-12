@@ -12,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display=['f_name','l_name','email']
+    list_display=['id','f_name','l_name','email']
 
 
 admin.site.register(product.Product,ProductAdmin)

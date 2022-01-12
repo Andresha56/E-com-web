@@ -26,6 +26,13 @@
       .log a:hover{
         color: aliceblue;
       }
+
+      #delete-btn{
+        background: transparent;
+        outline: 0px;
+        border: 0px;
+        color: red;
+      }
     </style>
       
 
@@ -63,13 +70,9 @@
           </ul>
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
           </form>
 
         </li>
-        <!-- <li class="nav-item log active">
-          <a class="nav-link " href="">Sign up</a>
-        </li> -->
 
         <li class="nav-item log active">
           <a class="nav-link " href="/login">Log in </a>
@@ -78,10 +81,11 @@
         <li class="nav-item log active">
           <a class="nav-link" href="#">Log out</a>
         </li>
-
-        <li class="nav-item log active">
-          <a class="nav-link" href="#">Delete my Account</a>
-        </li>
+        
+      <form action="{% url 'delete_customer' 34 %}" method="POST">
+        {% csrf_token %}
+         <input  id='delete-btn' type="submit" value="Delete my account">
+      </form>
         </div>
       </div>
     </nav>
