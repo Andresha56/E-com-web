@@ -1,0 +1,47 @@
+{%extends 'base.html' %}
+{% block title %}  
+search_page
+{% endblock %}
+
+
+
+{% block body %}
+
+<style>
+    img{
+        height: 350px;
+        object-fit: cover;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+</style>
+
+<div class="container  ">
+    <div class=" row justify-content-evenly ">
+        {% if messages %}
+        {% for message in messages %}
+
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Sorry!!</h4>
+            <p>{{message}}</p>
+          </div>
+        
+        {% endfor %}
+
+    {% endif %}
+      {% for products in search_product %}
+        <div class="card mt-4" style="width: 18rem;">
+            <img src="{{products.product_image.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{products.product_name}}</h5>
+              <p class="card-text"><b>R.s {{products.product_perice}}</p></b>
+              <a href="#" class="btn btn-dark">Add to card</a>
+              <a href="#" class="btn btn-dark">Buy Now</a>
+            </div>
+          </div>
+      {% endfor %} 
+    </div>
+  </div>
+
+
+{% endblock %}

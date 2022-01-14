@@ -97,3 +97,17 @@ def delete_customer(request,id):
         customer.delete()
         param={'customer':customer}
         return redirect('sign_up_page',param)
+
+
+
+# ----------search_products----------
+
+def search_products(request):
+    if request.method=='GET':
+        query=request.GET.get('query')
+        search_product=Product.objects.filter(product_name__icontains=query)
+        if not search_product:
+            messages.add_message(request,messages.INFO,' Result not found !!!  Please try some other name for better response')
+            print('not prersent')
+    param={'search_product':search_product,}
+    return render(request,'search.html',param)
